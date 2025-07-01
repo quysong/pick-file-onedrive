@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Upload, HardDrive, Cloud, FileText, ImageIcon, CheckCircle } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { AzureSetupGuide } from "@/components/azure-setup-guide"
 
 export default function OneDriveUploadPage() {
   const [selectedFile, setSelectedFile] = useState<string | null>(null)
@@ -14,8 +15,15 @@ export default function OneDriveUploadPage() {
   const [textInput, setTextInput] = useState("")
 
   const handleOneDriveAuth = async () => {
-    // Construct the Microsoft OAuth URL
+    // For demo purposes, we'll use a placeholder client ID
+    // You need to replace this with your actual Azure app registration
     const clientId = process.env.NEXT_PUBLIC_MICROSOFT_CLIENT_ID || "your_client_id_here"
+
+    if (clientId === "your_client_id_here") {
+      alert("Please configure your Microsoft Client ID in the environment variables. See the setup instructions below.")
+      return
+    }
+
     const redirectUri = encodeURIComponent(`${window.location.origin}/api/auth/microsoft`)
     const scope = encodeURIComponent("https://graph.microsoft.com/Files.Read https://graph.microsoft.com/User.Read")
 
@@ -196,6 +204,8 @@ export default function OneDriveUploadPage() {
             </Alert>
           </CardContent>
         </Card>
+
+        <AzureSetupGuide />
       </div>
     </div>
   )
